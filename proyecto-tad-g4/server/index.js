@@ -1,9 +1,5 @@
 // server/index.js
 
-<<<<<<< HEAD
-app.get('/', (req, res) => {
-  res.send('Hola manos 123 probando');
-=======
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -22,7 +18,6 @@ const db = mysql.createConnection({
     user: 'root',
     password: 'root',
     database: 'mydatabase'
->>>>>>> 0e1d823e9847f0191e185b184d6dcac5d1fe0045
 });
 
 // Ruta para manejar el inicio de sesión
@@ -30,7 +25,7 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-      return res.status(400).json({ message: 'Por favor, proporciona un nombre de usuario y una contraseña.' });
+      return res.status(400).json({ message: 'Por favor , proporciona un nombre de usuario y una contraseña xddddddd.' });
   }
 
   db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
@@ -60,5 +55,5 @@ app.post('/login', (req, res) => {
 
 // Iniciar el servidor
 app.listen(PORT, () => {
-    console.log(`Servidor backend corriendo en el puerto ${PORT}`);
+    console.log('Servidor backend corriendo en el puerto ${PORT}');
 });
