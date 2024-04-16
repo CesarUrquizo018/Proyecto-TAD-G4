@@ -25,7 +25,7 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-      return res.status(400).json({ message: 'Por favor , proporciona un nombre de dav' });
+      return res.status(400).json({ message: 'Por favor, abadsadsadsadsadsaddddddddddddsadsadsadsa' });
   }
 
   db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
