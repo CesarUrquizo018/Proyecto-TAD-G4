@@ -1,59 +1,45 @@
-// server/index.js
-
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const mysql = require('mysql2');
-const bcrypt = require('bcryptjs');
+const morgan = require('morgan');
+const helmet = require('helmet');
 
+// Crear una instancia de Express
 const app = express();
-const PORT = process.env.PORT || 3000;
+const authRoutes = require('./routes/auth');
+const proyectosRoutes = require('./routes/proyectos');
+const usuariosRoutes = require('./routes/usuarios');
 
+app.use('/api', authRoutes);
+app.use('/proyectos', proyectosRoutes);
+app.use('/usuarios', usuariosRoutes);
+
+// Middlewares de seguridad
+app.use(helmet());
+
+// Habilitar CORS para todas las rutas
 app.use(cors());
-app.use(bodyParser.json());
 
-// Configurar la conexión a la base de datos MySQL
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'mydatabase'
-});
+// Logging de solicitudes HTTP
+app.use(morgan('dev'));
 
-// Ruta para manejar el inicio de sesión
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
+// Middleware para parsear bodies de tipo JSON
+app.use(express.json());
 
-  if (!username || !password) {
-      return res.status(400).json({ message: 'Por favor, abadsadsadsadsadsaddddddddddddsadsadsadsa' });
-  }
+// Middleware para parsear bodies URL-encoded
+app.use(express.urlencoded({ extended: true }));
 
-  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
-      if (err) {
-          return res.status(500).json({ message: 'Error al buscar el usuario en la base de datos.' });
-      }
+// Aquí puedes añadir rutas y otros middlewares específicos de tu aplicación
 
-      if (results.length === 0) {
-          return res.status(401).json({ message: 'Nombre de usuario o contraseña incorrectos.' });
-      }
-
-      const user = results[0];
-
-      try {
-          if (await password, user.password) {
-              // Contraseña válida, inicio de sesión exitoso
-              return res.status(200).json({ message: 'Inicio de sesión exitoso.' });
-          } else {
-              // Contraseña incorrecta
-              return res.status(401).json({ message: 'Nombre de usuario o contraseña incorrectos.' });
-          }
-      } catch (error) {
-          return res.status(500).json({ message: 'Error al comparar las contraseñas.' });
-      }
-  });
+// Middleware para manejar errores - definir al final después de todas las rutas
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 // Iniciar el servidor
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log('Servidor backend corriendo en el puerto ${PORT}');
+  console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports = app;

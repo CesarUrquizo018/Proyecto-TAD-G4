@@ -1,0 +1,25 @@
+const mysql = require('mysql2');
+
+// Tu configuración de conexión a la base de datos
+const dbConfig = {
+  host: 'localhost', // o la IP de tu servidor de base de datos
+  user: 'root', // tu nombre de usuario para la base de datos
+  password: 'admin1', // tu contraseña de la base de datos
+  database: 'bd-tad-g4', // el nombre de tu base de datos
+};
+
+// Función asíncrona para conectar con la base de datos
+async function initializeDatabase() {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    console.log('Conexión a la base de datos MySQL establecida con éxito.');
+    return connection;
+  } catch (error) {
+    console.error('Error al conectar con la base de datos MySQL:', error);
+    throw error;
+  }
+}
+
+module.exports = {
+  initializeDatabase,
+};
