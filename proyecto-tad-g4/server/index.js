@@ -2,16 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
-
-// Crear una instancia de Express
 const app = express();
-const authRoutes = require('./routes/auth');
-const proyectosRoutes = require('./routes/proyectos');
-const usuariosRoutes = require('./routes/usuarios');
-
-app.use('/api', authRoutes);
-app.use('/proyectos', proyectosRoutes);
-app.use('/usuarios', usuariosRoutes);
 
 // Middlewares de seguridad
 app.use(helmet());
@@ -28,9 +19,17 @@ app.use(express.json());
 // Middleware para parsear bodies URL-encoded
 app.use(express.urlencoded({ extended: true }));
 
-// Aquí puedes añadir rutas y otros middlewares específicos de tu aplicación
+// Importar rutas
+const authRoutes = require('./src/routes/auth');
+const proyectosRoutes = require('./src/routes/proyectos');
+const usuariosRoutes = require('./src/routes/usuarios');
 
-// Middleware para manejar errores - definir al final después de todas las rutas
+// Usar rutas
+app.use('/api', authRoutes); // Tal vez quieras considerar colocar todas las rutas bajo el prefijo '/api'
+app.use('/api/proyectos', proyectosRoutes);
+app.use('/api/usuarios', usuariosRoutes);
+
+// Middleware para manejar errores - definir al final después de todas las rutas y middlewares
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');

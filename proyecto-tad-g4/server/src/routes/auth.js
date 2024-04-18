@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Usuario } = require('../models');
+const { Usuario } = require('../models/usuario');
 const bcrypt = require('bcryptjs');
 
 // Ruta para manejar el inicio de sesión

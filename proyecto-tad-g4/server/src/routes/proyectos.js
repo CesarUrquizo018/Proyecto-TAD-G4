@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Proyecto } = require('../models'); // Asegúrate de que la ruta sea correcta
+const { Proyecto } = require('../models/proyecto'); // Asegúrate de que la ruta sea correcta
 
 // Obtener todos los proyectos
 router.get('/', async (req, res) => {
