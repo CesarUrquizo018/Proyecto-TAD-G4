@@ -1,40 +1,39 @@
-// client/src/App.js
+// src/App.js
 
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
-function App() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
+const App = () => {
+  return (
+    <Router>
+      <div>
+        {/* Navegación */}
+        <nav>
+          <ul>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/">Login</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          </ul>
+        </nav>
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:3000/login', { username, password });
-            setMessage(response.data.message);
-        } catch (error) {
-            setMessage(error.response.data.message);
-        }
-    };
-
-    return (
-        <div className="App">
-            <h1>Inicio de sesión</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nombre de usuario:</label>
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-                </div>
-                <div>
-                    <label>Contraseña:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </div>
-                <button type="submit">Iniciar sesión</button>
-            </form>
-            {message && <p>{message}</p>}
-        </div>
-    );
-}
+        {/* Rutas */}
+        <Routes>
+          <Route path="/home" element={<HomePage />} exact />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
 
 export default App;
