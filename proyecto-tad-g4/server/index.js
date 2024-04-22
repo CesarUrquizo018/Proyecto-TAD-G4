@@ -82,11 +82,11 @@ app.post('/login', (req, res) => {
 });
 
 // Ruta para manejar la creación de usuario
-app.post('/crearUsuario', (req, res) => {
-  const { nombre, codigo, email, contrasena, foto_perfil } = req.body;
+app.post('/register', (req, res) => {
+  const { username, codigo, email, foto_perfil,password } = req.body;
 
   db.query('INSERT INTO usuario (nombre, codigo, email, contrasena, foto_perfil) VALUES (?, ?, ?, ?, ?)',
-      [nombre, codigo, email, contrasena, foto_perfil],
+      [username, codigo, email, password ,foto_perfil],
       (err, results) => {
           if (err) {
               console.error('Error al insertar nuevo usuario:', err);
