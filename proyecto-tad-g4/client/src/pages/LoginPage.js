@@ -13,7 +13,7 @@ function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/api/login', { username, password });
+            const response = await axios.post('http://localhost:3000/login', { username, password });
             setMessage(response.data.message);
             // Navegar a otra ruta en caso de inicio de sesión exitoso
             navigate('/ruta-de-destino'); // Cambia '/ruta-de-destino' por la ruta deseada

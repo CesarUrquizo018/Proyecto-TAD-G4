@@ -17,7 +17,7 @@ const App = () => {
               <Link to="/home">Home</Link>
             </li>
             <li>
-              <Link to="/">Login</Link>
+              <Link to="/login">Login</Link>
             </li>
             <li>
               <Link to="/register">Register</Link>
@@ -28,6 +28,7 @@ const App = () => {
         {/* Rutas */}
         <Routes>
           <Route path="/home" element={<HomePage />} exact />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>

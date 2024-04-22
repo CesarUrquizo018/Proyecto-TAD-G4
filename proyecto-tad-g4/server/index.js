@@ -4,6 +4,10 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const app = express();
 
+const bodyParser = require('body-parser');
+const mysql = require('mysql2');
+const bcrypt = require('bcryptjs');
+
 // Middlewares de seguridad
 app.use(helmet());
 
@@ -33,6 +37,63 @@ app.use('/api/usuarios', usuariosRoutes);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
+});
+
+// Configurar la conexión a la base de datos MySQL
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
+  database: 'bd_tad_g4'
+});
+
+// Ruta para manejar el inicio de sesión
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Por favor, proporciona un nombre de usuario y una contraseña.' });
+  }
+
+  db.query('SELECT * FROM usuario WHERE nombre = ?', [username], async (err, results) => {
+    if (err) {
+      console.error('Error al buscar el usuario en la base de datos:', err);
+      return res.status(500).json({ message: 'Error al buscar el usuario en la base de datos.' });
+    }
+
+    if (results.length === 0) {
+      return res.status(401).json({ message: 'Nombre de usuario o contraseña incorrectos.' });
+    }
+
+    const usuario = results[0];
+
+    try {
+      if (password === usuario.contrasena) {
+        // Contraseña válida, inicio de sesión exitoso
+        return res.status(200).json({ message: 'Inicio de sesión exitoso.' });
+      } else {
+        // Contraseña incorrecta
+        return res.status(401).json({ message: 'Nombre de usuario o contraseña incorrectos.' });
+      }
+    } catch (error) {
+      return res.status(500).json({ message: 'Error al comparar las contraseñas.' });
+    }
+  });
+});
+
+// Ruta para manejar la creación de usuario
+app.post('/crearUsuario', (req, res) => {
+  const { nombre, codigo, email, contrasena, foto_perfil } = req.body;
+
+  db.query('INSERT INTO usuario (nombre, codigo, email, contrasena, foto_perfil) VALUES (?, ?, ?, ?, ?)',
+      [nombre, codigo, email, contrasena, foto_perfil],
+      (err, results) => {
+          if (err) {
+              console.error('Error al insertar nuevo usuario:', err);
+              return res.status(500).json({ message: 'Error al crear el usuario.' });
+          }
+          return res.status(201).json({ message: 'Usuario creado exitosamente.' });
+      });
 });
 
 // Iniciar el servidor
