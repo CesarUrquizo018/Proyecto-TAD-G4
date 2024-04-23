@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../assets/styles/login.css'; // Ajusta la ruta si es necesario
-
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -16,7 +16,7 @@ function LoginPage() {
             const response = await axios.post('http://localhost:3000/login', { username, password });
             setMessage(response.data.message);
             // Navegar a otra ruta en caso de inicio de sesión exitoso
-            navigate('/user', {state: { usuario: response.data.usuario } }); // Cambia '/ruta-de-destino' por la ruta deseada
+            navigate('/home', {state: { usuario: response.data.usuario } }); // Cambia '/ruta-de-destino' por la ruta deseada
         } catch (error) {
             setMessage(error.response ? error.response.data.message : 'Error de conexión');
         }

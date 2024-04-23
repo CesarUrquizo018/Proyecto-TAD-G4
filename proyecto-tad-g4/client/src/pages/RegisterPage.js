@@ -1,33 +1,32 @@
-// src/pages/HomePage.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../assets/styles/registro_usuario.css'; // Ajusta la ruta si es necesario
+import '../assets/styles/registro_usuario.css';
 
 function RegisterPage() {
     const [username, setUsername] = useState('');
     const [codigo, setCodigo] = useState('');
     const [email, setEmail] = useState('');
-    const [foto_perfil, setFoto_Perfil] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const navigate = useNavigate(); // Hook para navegar
+    const navigate = useNavigate();
+
+    // Establecer el valor predeterminado para la foto de perfil
+    const defaultProfilePhoto = `${username}.jpg`;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/register', { username,codigo,email,foto_perfil,password });
+            const response = await axios.post('http://localhost:3000/register', { username, codigo, email, foto_perfil: defaultProfilePhoto, password });
             setMessage(response.data.message);
-            // Navegar a otra ruta en caso de inicio de sesión exitoso
-            navigate('/user',{state: { usuario: response.data.usuario } }); // Cambia '/ruta-de-destino' por la ruta deseada
+            navigate('/home', { state: { usuario: response.data.usuario } });
         } catch (error) {
             setMessage(error.response ? error.response.data.message : 'Error de conexión');
         }
     };
 
     const handleCreateClick = () => {
-        // Utiliza navigate para ir a la página de registro
-        navigate('/login'); // Ajusta la ruta según tu configuración de rutas
+        navigate('/login');
     };
 
     return (
@@ -47,18 +46,15 @@ function RegisterPage() {
                     <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="foto_perfil">Foto_perfil:</label>
-                    <input type="text" id="foto_perfil" value={foto_perfil} onChange={(e) => setFoto_Perfil(e.target.value)} />
-                </div>
-                <div className="form-group">
                     <label htmlFor="password">Contraseña:</label>
                     <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <button type="submit" className="btn-crear_usuario">Crear Usuario</button>
-                <button type="button" onClick={handleCreateClick} className="btn-login">Iniciar Sesion</button>
+                <button type="button" onClick={handleCreateClick} className="btn-login">Regresar</button>
             </form>
             {message && <p className="message">{message}</p>}
         </div>
     );
 }
+
 export default RegisterPage;
