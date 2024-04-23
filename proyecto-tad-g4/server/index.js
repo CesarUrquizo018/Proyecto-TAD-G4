@@ -70,7 +70,7 @@ app.post('/login', (req, res) => {
     try {
       if (password === usuario.contrasena) {
         // Contraseña válida, inicio de sesión exitoso
-        return res.status(200).json({ message: 'Inicio de sesión exitoso.' });
+        return res.status(200).json({ message: 'Inicio de sesión exitoso.',usuario:usuario });
       } else {
         // Contraseña incorrecta
         return res.status(401).json({ message: 'Nombre de usuario o contraseña incorrectos.' });
@@ -92,7 +92,14 @@ app.post('/register', (req, res) => {
               console.error('Error al insertar nuevo usuario:', err);
               return res.status(500).json({ message: 'Error al crear el usuario.' });
           }
-          return res.status(201).json({ message: 'Usuario creado exitosamente.' });
+          db.query('SELECT * FROM usuario WHERE nombre = ?', [username], async (err, results) => {
+            if (err) {
+              console.error('Error al buscar el usuario en la base de datos:', err);
+              return res.status(500).json({ message: 'Error al buscar el usuario en la base de datos.' });
+            }
+            const usuario = results[0];
+            return res.status(200).json({ message: 'Usuario creado exitosamente.',usuario:usuario });
+          });
       });
 });
 

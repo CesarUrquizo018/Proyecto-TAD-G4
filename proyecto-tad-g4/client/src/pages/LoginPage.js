@@ -16,7 +16,7 @@ function LoginPage() {
             const response = await axios.post('http://localhost:3000/login', { username, password });
             setMessage(response.data.message);
             // Navegar a otra ruta en caso de inicio de sesión exitoso
-            navigate('/ruta-de-destino'); // Cambia '/ruta-de-destino' por la ruta deseada
+            navigate('/user', {state: { usuario: response.data.usuario } }); // Cambia '/ruta-de-destino' por la ruta deseada
         } catch (error) {
             setMessage(error.response ? error.response.data.message : 'Error de conexión');
         }
