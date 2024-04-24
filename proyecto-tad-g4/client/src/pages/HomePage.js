@@ -36,8 +36,11 @@ function HomePage() {
           <li>
             <Link to="/home">Home</Link>
           </li>
-            <li>
+          <li>
               <Link to="/user">User</Link>
+            </li>
+            <li>
+              <Link to="/">Salir</Link>
             </li>
         </ul>
       </nav>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../assets/styles/registro_usuario.css';
+import { useUser } from '../contexto/UserContext';
 
 function RegisterPage() {
     const [username, setUsername] = useState('');
@@ -10,6 +11,7 @@ function RegisterPage() {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const { loginUser } = useUser(); // Acceder a la función para establecer el usuario en el contexto
 
     // Establecer el valor predeterminado para la foto de perfil
     const defaultProfilePhoto = `${username}.jpg`;
@@ -18,8 +20,13 @@ function RegisterPage() {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:3000/register', { username, codigo, email, foto_perfil: defaultProfilePhoto, password });
+            const usuario = response.data.usuario;
+  
+            // Establecer el usuario en el contexto después del inicio de sesión
+            loginUser(usuario);
+  
             setMessage(response.data.message);
-            navigate('/home', { state: { usuario: response.data.usuario } });
+            navigate('/home');
         } catch (error) {
             setMessage(error.response ? error.response.data.message : 'Error de conexión');
         }

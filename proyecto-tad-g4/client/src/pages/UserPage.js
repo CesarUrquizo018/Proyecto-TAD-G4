@@ -23,6 +23,9 @@ import React, { useState } from 'react';
               <li>
                 <Link to="/user">User</Link>
               </li>
+              <li>
+              <Link to="/">Salir</Link>
+            </li>
             </ul>
           </nav>
         </div>
