@@ -1,27 +1,58 @@
 // src/pages/UserPage.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import '../assets/styles/user_page.css'; // Ajusta la ruta si es necesario
+import { useUser } from '../contexto/UserContext';
+import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 
-function UserPage(){
-  const location = useLocation();
-  const usuario = location.state.usuario;
+  function UserPage() {
+    const { user } = useUser();// Acceder al objeto usuario desde el contexto
+    const [showPassword, setShowPassword] = useState(false); // Estado para controlar si se muestra la contraseña
+    
+    const toggleShowPassword = () => {
+      setShowPassword(!showPassword);
+    };
 
-  // Usa el objeto del usuario aquí
-
-  return (
-    <div>
-      <h1>Bienvenido, {usuario.nombre}!</h1>
-      <label>id: {usuario.id_usuario}</label>
-      <label>Codigo: {usuario.codigo}</label>
-      <label>Email: {usuario.email}</label>
-      <label>Contraseña: {usuario.contrasena}</label>
-      <label>Foto_perfil: {usuario.foto_perfil}</label>
-      {/* Mostrar otros datos del usuario según sea necesario */}
-    </div>
-  );
-}
+    return (
+      <div>
+        <div className="enlaces">
+          <nav>
+            <ul>
+              <li>
+                <Link to="/home">Home</Link>
+              </li>
+              <li>
+                <Link to="/user">User</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+  
+        <div className="user-container">
+          <h1>Bienvenido, {user.nombre}!</h1>
+          <div>
+            <label className="user-info-label">ID:</label>
+            <span className="user-info-value">{user.id_usuario}</span>
+          </div>
+          <div>
+            <label className="user-info-label">Código:</label>
+            <span className="user-info-value">{user.codigo}</span>
+          </div>
+          <div>
+            <label className="user-info-label">Email:</label>
+            <span className="user-info-value">{user.email}</span>
+          </div>
+          <div>
+            <label className="user-info-label">Contraseña:</label>
+            {showPassword ? (
+              <span className="user-info-value">{user.contrasena}</span>
+            ) : (
+              <span className="password-mask">********</span>
+            )}
+            <button onClick={toggleShowPassword}>{showPassword ? 'Ocultar' : 'Mostrar'}</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
 export default UserPage;
