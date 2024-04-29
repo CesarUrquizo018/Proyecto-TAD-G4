@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import UserPage from './pages/UserPage';
+import MisProyectosPage from './pages/MisProyectosPage';
 import { UserProvider } from './contexto/UserContext';
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/user" element={<UserPage />} />
+            <Route path="/myproyect" element={<MisProyectosPage />} />
           </Routes>
         </div>
       </Router>

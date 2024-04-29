@@ -1,11 +1,11 @@
-import '../assets/styles/home_page.css'; // Ajusta la ruta si es necesario
+import '../assets/styles/mis_proyectos.css'; // Ajusta la ruta si es necesario
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../contexto/UserContext';
 import axios from 'axios';
 import { formatDate } from '../utils/dateUtils';
 
-function HomePage() {
+function MisProyectosPage() {
   const { user } = useUser(); // Acceder al objeto usuario desde el contexto
   const [proyectos, setProyectos] = useState([]);
 
@@ -15,7 +15,7 @@ function HomePage() {
 
   const obtenerProyectos = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/home', {
+      const response = await axios.post('http://localhost:3000/myproyect', {
         usuarioId: user.id_usuario
       });
 
@@ -47,7 +47,7 @@ function HomePage() {
             </li>
         </ul>
       </nav>
-      <h1>Proyectos</h1>
+      <h1>Mis Proyectos</h1>
       <div>
         {proyectos.map(proyecto => (
           <div key={proyecto.id_proyecto} className="project-table">
@@ -79,5 +79,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
-
+export default MisProyectosPage;

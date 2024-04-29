@@ -122,6 +122,25 @@ app.post('/home', (req, res) => {
   });
 });
 
+// Ruta para manejar MisProyectos
+app.post('/myproyect', (req, res) => {
+  const { usuarioId } = req.body;
+
+  if (!usuarioId) {
+    return res.status(400).json({ message: 'ID de usuario no proporcionado' });
+  }
+
+  // Realizar la consulta a la base de datos para obtener los proyectos
+  db.query('SELECT * FROM proyecto WHERE id_usuario = ?', [usuarioId], (err, results) => {
+    if (err) {
+      console.error('Error al obtener los proyectos:', err);
+      return res.status(500).json({ message: 'Error al obtener los proyectos' });
+    }
+
+    return res.status(200).json({ proyectos: results });
+  });
+});
+
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

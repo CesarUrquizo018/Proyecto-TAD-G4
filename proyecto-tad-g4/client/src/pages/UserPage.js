@@ -24,6 +24,9 @@ import React, { useState } from 'react';
                 <Link to="/user">User</Link>
               </li>
               <li>
+                <Link to="/myproyect">Mis Proyectos</Link>
+              </li>
+              <li>
               <Link to="/">Salir</Link>
             </li>
             </ul>
