@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../assets/styles/register.css';  // Asegúrate de que la ruta es correcta
+import '../assets/styles/register_user.css';  // Asegúrate de que la ruta es correcta
 
 function CreateUserPage() {
     const [username, setUsername] = useState('');
