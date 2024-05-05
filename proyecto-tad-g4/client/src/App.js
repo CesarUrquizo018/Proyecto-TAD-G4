@@ -1,38 +1,32 @@
-// src/App.js
-
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
+import { UserProvider } from './context/UserContext';
+
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import CreateUserPage from './pages/CreateUserPage';
+import UserPage from './pages/UserPage';
+import MyProjectsPage from './pages/MyProjectsPage';
+import CreateProjectPage from './pages/CreateProjectPage';
+import EditProjectPage from './pages/EditProjectPage';
 
 const App = () => {
   return (
-    <Router>
-      <div>
-        {/* Navegación */}
-        <nav>
-          <ul>
-            <li>
-              <Link to="/home">Home</Link>
-            </li>
-            <li>
-              <Link to="/">Login</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Rutas */}
+    <UserProvider>
+      <Router>
         <Routes>
-          <Route path="/home" element={<HomePage />} exact />
           <Route path="/" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<CreateUserPage />} />
+          <Route path="/home" element={<PrivateRoute element={HomePage} />} />
+          <Route path="/user" element={<PrivateRoute element={UserPage} />} />
+          <Route path="/myprojects" element={<PrivateRoute element={MyProjectsPage} />} />
+          <Route path="/create-project" element={<PrivateRoute element={CreateProjectPage} />} />
+          <Route path="/edit-project/:id" element={<PrivateRoute element={EditProjectPage} />} />
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </UserProvider>
   );
 };
 

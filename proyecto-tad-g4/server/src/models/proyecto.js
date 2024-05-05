@@ -1,45 +1,28 @@
-// proyecto.js
-
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Asegúrate de que la ruta sea correcta
+const sequelize = require('../config/database');
+const Usuario = require('./usuario');
 
 class Proyecto extends Model {}
 
 Proyecto.init({
-  id_proyecto: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  titulo: {
-    type: DataTypes.STRING(100),
-    allowNull: false
-  },
-  descripcion: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  fecha_creacion: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  ciclo: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  curso: {
-    type: DataTypes.STRING(120),
-    allowNull: false
-  },
-  id_usuario: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
+    id_proyecto: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    titulo: DataTypes.STRING(100),
+    descripcion: DataTypes.TEXT,
+    fecha_creacion: DataTypes.DATEONLY,
+    ciclo: DataTypes.INTEGER,
+    curso: DataTypes.STRING(120),
+    id_usuario: DataTypes.INTEGER
 }, {
-  sequelize,
-  modelName: 'Proyecto',
-  tableName: 'proyecto',
-  timestamps: false
+    sequelize,
+    modelName: 'Proyecto',
+    tableName: 'proyecto',
+    timestamps: false
 });
 
-module.exports =  Proyecto;
+Proyecto.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+
+module.exports = Proyecto;

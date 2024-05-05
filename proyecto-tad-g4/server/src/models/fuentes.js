@@ -1,37 +1,26 @@
-// fuentes.js
-
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Asegúrate de que la ruta sea correcta
+const sequelize = require('../config/database');
+const Proyecto = require('./proyecto'); // Importando Proyecto
 
 class Fuentes extends Model {}
 
 Fuentes.init({
-  id_fuentes: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  NombrFuente: {
-    type: DataTypes.STRING(255),
-    allowNull: false
-  },
-  URLFuente: {
-    type: DataTypes.STRING(255),
-    allowNull: true // Cambia a false si la columna no debe ser nula
-  },
-  FechaPublicacion: {
-    type: DataTypes.DATE,
-    allowNull: true // Cambia a false si la columna no debe ser nula
-  },
-  id_proyecto: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
+    id_fuentes: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    NombreFuente: DataTypes.STRING(255),
+    URLFuente: DataTypes.STRING(255),
+    FechaPublicacion: DataTypes.DATEONLY,
+    id_proyecto: DataTypes.INTEGER
 }, {
-  sequelize,
-  modelName: 'Fuentes',
-  tableName: 'fuentes',
-  timestamps: false
+    sequelize,
+    modelName: 'Fuentes',
+    tableName: 'fuentes',
+    timestamps: false
 });
+
+Fuentes.belongsTo(Proyecto, { foreignKey: 'id_proyecto' }); // Estableciendo relación
 
 module.exports = Fuentes;
