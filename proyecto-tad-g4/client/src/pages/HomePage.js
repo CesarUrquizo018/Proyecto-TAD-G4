@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -8,17 +7,6 @@ import '../assets/styles/home.css'; // Verifica que la ruta al CSS es correcta
 
 function HomePage() {
   const { user } = useUser(); // Se mantiene por si necesitas acceder al usuario para otras funciones
-=======
-import '../assets/styles/home_page.css'; // Ajusta la ruta si es necesario
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useUser } from '../contexto/UserContext';
-import axios from 'axios';
-import { formatDate } from '../utils/dateUtils';
-
-function HomePage() {
-  const { user } = useUser(); // Acceder al objeto usuario desde el contexto
->>>>>>> 8de5989055a15137c863151da87a4abeeabb3449
   const [proyectos, setProyectos] = useState([]);
 
   useEffect(() => {
@@ -27,20 +15,11 @@ function HomePage() {
 
   const obtenerProyectos = async () => {
     try {
-<<<<<<< HEAD
       // Elimina los parámetros ya que quieres obtener todos los proyectos
       const response = await axios.get(`http://localhost:3000/api/proyectos`);
 
       if (response.status === 200) {
         setProyectos(response.data);  // Asegúrate de que la respuesta del backend se maneje correctamente
-=======
-      const response = await axios.post('http://localhost:3000/home', {
-        usuarioId: user.id_usuario
-      });
-
-      if (response.status === 200) {
-        setProyectos(response.data.proyectos);
->>>>>>> 8de5989055a15137c863151da87a4abeeabb3449
       } else {
         console.error('Error al obtener los proyectos');
       }
@@ -53,25 +32,10 @@ function HomePage() {
     <div>
       <nav>
         <ul>
-<<<<<<< HEAD
           <li><Link to="/home">Home</Link></li>
           <li><Link to="/user">User</Link></li>
           <li><Link to="/myprojects">Mis Proyectos</Link></li>
           <li><Link to="/">Salir</Link></li>
-=======
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-          <li>
-              <Link to="/user">User</Link>
-            </li>
-            <li>
-                <Link to="/myproyect">Mis Proyectos</Link>
-              </li>
-            <li>
-              <Link to="/">Salir</Link>
-            </li>
->>>>>>> 8de5989055a15137c863151da87a4abeeabb3449
         </ul>
       </nav>
       <h1>Proyectos</h1>
