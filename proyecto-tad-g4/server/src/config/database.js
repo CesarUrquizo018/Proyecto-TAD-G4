@@ -1,10 +1,10 @@
 // src/config/database.js
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('bd_tad_g4', 'root', 'root', {
+const sequelize = new Sequelize('bd-tad-g4', 'root', 'admin1', {
     host: 'localhost',
     dialect: 'mysql',
-    port: 3306
+    port: 3308
 });
 
 sequelize.authenticate()
