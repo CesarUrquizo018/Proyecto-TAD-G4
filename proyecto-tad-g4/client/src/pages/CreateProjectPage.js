@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import '../assets/styles/create_project.css';
 
 function CreateProjectPage() {
     const [titulo, setTitulo] = useState('');
@@ -28,6 +29,10 @@ function CreateProjectPage() {
         } catch (error) {
             console.error('Error al crear el proyecto:', error);
         }
+    };
+
+    const handleCreateClick = () => {
+        navigate('/myprojects');  // Asegúrate de que esta ruta es correcta
     };
 
     return (
@@ -62,6 +67,7 @@ function CreateProjectPage() {
                     required
                 />
                 <button type="submit">Crear Proyecto</button>
+                <button type="boton" onClick={handleCreateClick} className="btn-regresar">Regresar</button>
             </form>
         </div>
     );

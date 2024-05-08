@@ -39,4 +39,13 @@
   .project-table tbody tr:hover {
     background-color: #ffffff;
   }
+  .crear-proyecto-link {
+    display: inline-block; /* Para que el enlace ocupe solo el espacio necesario */
+    margin-bottom: 10px; /* Espacio entre el título y el enlace */
+  }
   
+  .crear-proyecto-link img{
+    vertical-align: middle; /* Alinear verticalmente la imagen */
+    width: 30px; /* Tamaño de la imagen */
+    margin-right: 20px; /* Espacio entre la imagen y el texto */
+  }

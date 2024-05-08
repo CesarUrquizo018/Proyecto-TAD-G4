@@ -24,41 +24,46 @@ function UserPage() {
 
   return (
     <div>
-      <div className="enlaces">
-        <nav>
-          <ul>
-            <li><Link to="/home">Home</Link></li>
-            <li><Link to="/user">User</Link></li>
-            <li><Link to="/">Salir</Link></li>
-          </ul>
-        </nav>
-      </div>
+  <div className="enlaces">
+    <nav>
+      <ul>
+        <li><Link to="/home">Home</Link></li>
+        <li><Link to="/user">User</Link></li>
+        <li><Link to="/myprojects">Mis Proyectos</Link></li>    
+        <li><Link to="/">Salir</Link></li>
+      </ul>
+    </nav>
+  </div>
 
-      <div className="user-container">
-        <h1>Bienvenido, {user.nombre}!</h1>
-        <div>
-          <label className="user-info-label">ID:</label>
-          <span className="user-info-value">{user.id_usuario}</span>
-        </div>
-        <div>
-          <label className="user-info-label">Código:</label>
-          <span className="user-info-value">{user.codigo}</span>
-        </div>
-        <div>
-          <label className="user-info-label">Email:</label>
-          <span className="user-info-value">{user.email}</span>
-        </div>
-        <div>
-          <label className="user-info-label">Contraseña:</label>
-          {showPassword ? (
-            <span className="user-info-value">{user.contrasena}</span>
-          ) : (
-            <span className="password-mask">********</span>
-          )}
-          <button onClick={toggleShowPassword}>{showPassword ? 'Ocultar' : 'Mostrar'}</button>
-        </div>
+  <div className="user-container">
+    <div className="titulo">Bienvenido, {user.nombre}!</div>
+    <div>
+    <div>
+  <div className="user-info">
+    <div className="user-info-label">ID:</div>
+    <div className="user-info-value">{user.id_usuario}</div>
+  </div>
+  <div className="user-info">
+    <div className="user-info-label">Código:</div>
+    <div className="user-info-value">{user.codigo}</div>
+  </div>
+  <div className="user-info">
+    <div className="user-info-label">Email:</div>
+    <div className="user-info-value">{user.email}</div>
+  </div>
+</div>
+      <div  className="user-info">
+      <div className="user-info-label">Contraseña:</div>
+        {showPassword ? (
+          <div className="user-info-value">{user.contrasena}</div>
+        ) : (
+          <div className="user-info-value">********</div>
+        )}
+        <button className="boton" onClick={toggleShowPassword}>{showPassword ? 'Ocultar' : 'Mostrar'}</button>
       </div>
     </div>
+  </div>
+</div>
   );
 }
 

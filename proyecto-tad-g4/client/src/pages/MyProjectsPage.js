@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from '../utils/dateUtils';
 import { useUser } from '../context/UserContext';
-import '../assets/styles/home.css'; // Asegúrate de que la ruta es correcta
+import '../assets/styles/my_projects.css'; // Asegúrate de que la ruta es correcta
+import agregarProyectoImg from '../images/agregarProyecto.png';
 
 function MyProjectsPage() {
   const { user } = useUser(); // Acceder al objeto usuario desde el contexto
@@ -59,11 +60,16 @@ function MyProjectsPage() {
           <li><Link to="/home">Home</Link></li>
           <li><Link to="/user">User</Link></li>
           <li><Link to="/myprojects">Mis Proyectos</Link></li>
-          <li><Link to="/create-project">Crear Proyecto</Link></li>
           <li><Link to="/">Salir</Link></li>
         </ul>
       </nav>
       <h1>Mis Proyectos</h1>
+      
+      <Link to="/create-project" className="crear-proyecto-link">
+        Crear Proyecto
+        <img src={agregarProyectoImg} alt="(+)" className="crear-proyecto-link img" />
+        </Link>
+        
       <div>
         {proyectos.map(proyecto => (
           <div key={proyecto.id_proyecto} className="project-table">

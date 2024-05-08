@@ -40,7 +40,7 @@ function MisProyectosPage() {
               <Link to="/user">User</Link>
             </li>
             <li>
-                <Link to="/myproyect">Mis Proyectos</Link>
+                <Link to="/myprojects">Mis Proyectos</Link>
               </li>
             <li>
               <Link to="/">Salir</Link>
