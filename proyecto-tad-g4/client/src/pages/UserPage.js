@@ -2,11 +2,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-import '../assets/styles/user.css'; // Asegúrate de que la ruta es correcta
+import { useNavigate } from 'react-router-dom';
+import '../assets/styles/user.css'; 
 
 function UserPage() {
   const { user } = useUser(); // Acceder al objeto usuario desde el contexto
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar si se muestra la contraseña
+  const navigate = useNavigate();  // Hook para la navegación
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -21,6 +23,10 @@ function UserPage() {
       </div>
     );
   }
+
+  const editarUsuario = (id) => {
+    navigate(`/edit-usuario/${id}`); // Navegar a la página de edición
+  };
 
   return (
     <div>
@@ -59,7 +65,11 @@ function UserPage() {
         ) : (
           <div className="user-info-value">********</div>
         )}
-        <button className="boton" onClick={toggleShowPassword}>{showPassword ? 'Ocultar' : 'Mostrar'}</button>
+        <button className="botonContrasena" onClick={toggleShowPassword}>{showPassword ? 'Ocultar' : 'Mostrar'}</button>
+        
+      </div>
+      <div>
+        <button className="botonEditar" onClick={() => editarUsuario(user.id_usuario)}>Editar</button>
       </div>
     </div>
   </div>

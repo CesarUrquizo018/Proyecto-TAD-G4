@@ -10,6 +10,7 @@ import UserPage from './pages/UserPage';
 import MyProjectsPage from './pages/MyProjectsPage';
 import CreateProjectPage from './pages/CreateProjectPage';
 import EditProjectPage from './pages/EditProjectPage';
+import EditUserPage from './pages/EditUserPage';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/register" element={<CreateUserPage />} />
           <Route path="/home" element={<PrivateRoute element={HomePage} />} />
           <Route path="/user" element={<PrivateRoute element={UserPage} />} />
+          <Route path="/edit-usuario/:id" element={<PrivateRoute element={EditUserPage} />} />
           <Route path="/myprojects" element={<PrivateRoute element={MyProjectsPage} />} />
           <Route path="/create-project" element={<PrivateRoute element={CreateProjectPage} />} />
           <Route path="/edit-project/:id" element={<PrivateRoute element={EditProjectPage} />} />
