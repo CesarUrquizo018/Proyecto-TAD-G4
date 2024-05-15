@@ -58,10 +58,17 @@
     line-height: 30px; /* Aumenta la altura de línea al 150% del tamaño del texto */
 }
   
-.boton{
+.botonContrasena{
     flex-grow: 0.1; /* Hace que los valores se expandan para ocupar el espacio disponible */
     font-size: 20px;
     line-height: 30px; /* Aumenta la altura de línea al 150% del tamaño del texto */
+}
+
+.botonEditar{
+    flex-grow: 0.1; /* Hace que los valores se expandan para ocupar el espacio disponible */
+    font-size: 20px;
+    line-height: 30px; /* Aumenta la altura de línea al 150% del tamaño del texto */
+    background-color: #4a9b50;
 }
 
 /* Estilos para la foto de perfil */
