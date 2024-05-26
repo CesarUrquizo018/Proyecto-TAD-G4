@@ -1,4 +1,3 @@
-// src/pages/LoginPage.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +7,7 @@ import { useUser } from '../context/UserContext';
 
 function LoginPage() {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [contrasena, setContrasena] = useState(''); // Cambio de `password` a `contrasena` para consistencia
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
     const { loginUser } = useUser();
@@ -16,10 +15,10 @@ function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/login', { email, password });
-            const usuario = response.data.usuario;
+            const response = await axios.post('http://localhost:3000/api/auth/login', { email, contrasena });
+            const { usuario, token } = response.data;
 
-            loginUser(usuario);
+            loginUser(usuario, token);
             setMessage(response.data.message);
             navigate('/home');
         } catch (error) {
@@ -41,7 +40,7 @@ function LoginPage() {
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Contraseña:</label>
-                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" id="password" value={contrasena} onChange={(e) => setContrasena(e.target.value)} />
                 </div>
                 <button type="submit" className="btn-login">Iniciar sesión</button>
                 <button type="button" onClick={handleCreateClick} className="btn-create">Crear cuenta</button>

@@ -1,6 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Usuario = require('./usuario');
+const Fuentes = require('./fuentes');
+const Anotaciones = require('./anotaciones');
+const Otros = require('./otros');
 
 class Proyecto extends Model {}
 
@@ -24,5 +27,8 @@ Proyecto.init({
 });
 
 Proyecto.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+//Proyecto.hasMany(Fuentes, { foreignKey: 'id_proyecto' });
+//Proyecto.hasMany(Anotaciones, { foreignKey: 'id_proyecto' });
+//Proyecto.hasMany(Otros, { foreignKey: 'id_proyecto' });
 
 module.exports = Proyecto;

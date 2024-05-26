@@ -1,3 +1,47 @@
+/*const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+const Proyecto = require('./proyecto');
+
+class Fuentes extends Model {}
+
+Fuentes.init({
+    id_fuentes: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    NombreFuente: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    URLFuente: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    FechaPublicacion: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+    },
+    id_proyecto: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Proyecto,
+            key: 'id_proyecto'
+        }
+    }
+}, {
+    sequelize,
+    modelName: 'fuentes',
+    tableName: 'fuentes',
+    timestamps: false
+});
+
+Fuentes.belongsTo(Proyecto, { foreignKey: 'id_proyecto' });
+
+module.exports = Fuentes;
+*/
+
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Proyecto = require('./proyecto'); // Importando Proyecto
@@ -21,6 +65,6 @@ Fuentes.init({
     timestamps: false
 });
 
-Fuentes.belongsTo(Proyecto, { foreignKey: 'id_proyecto' }); // Estableciendo relación
+//Fuentes.belongsTo(Proyecto, { foreignKey: 'id_proyecto' }); // Estableciendo relación
 
 module.exports = Fuentes;

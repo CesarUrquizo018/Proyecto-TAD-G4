@@ -1,8 +1,11 @@
 const Proyecto = require('../models/proyecto');
 const Usuario = require('../models/usuario');
+const Fuente = require('../models/fuentes');
+const Anotacion = require('../models/anotaciones');
+const Otro = require('../models/otros');
 
 const proyectoController = {
-    //obtener todos los proyectos (para HomePage)
+    // Obtener todos los proyectos (para HomePage)
     getAllProyectos: async (req, res) => {
         try {
             const proyectos = await Proyecto.findAll({
@@ -15,7 +18,7 @@ const proyectoController = {
         }
     },
 
-    //obtener proyectos por ID (para el buscador, HomePage)
+    // Obtener proyecto por ID (para el buscador, HomePage)
     getProyectoById: async (req, res) => {
         try {
             const proyecto = await Proyecto.findByPk(req.params.id, {
@@ -32,7 +35,7 @@ const proyectoController = {
         }
     },
 
-    //obtener proyectos por Usuario (para MyProjectsPage)
+    // Obtener proyectos por Usuario (para MyProjectsPage)
     getProyectosByUsuario: async (req, res) => {
         const { usuarioId } = req.params;  // Usar params en lugar de body para un GET
 
@@ -52,7 +55,7 @@ const proyectoController = {
         }
     },
 
-    //crear proyecto (para MyProjectsPage)
+    // Crear proyecto (para MyProjectsPage)
     createProyecto: async (req, res) => {
         try {
             const proyecto = await Proyecto.create(req.body);
@@ -63,7 +66,7 @@ const proyectoController = {
         }
     },
 
-    //editar proyecto (para MyProjectsPage)
+    // Editar proyecto (para MyProjectsPage)
     updateProyecto: async (req, res) => {
         try {
             const proyecto = await Proyecto.findByPk(req.params.id);
@@ -79,7 +82,7 @@ const proyectoController = {
         }
     },
 
-    //borrar proyecto (para MyProjectPage)
+    // Borrar proyecto (para MyProjectPage)
     deleteProyecto: async (req, res) => {
         try {
             const result = await Proyecto.destroy({
@@ -94,7 +97,8 @@ const proyectoController = {
             console.error('Error al eliminar el proyecto:', error);
             res.status(500).send({ message: 'Error al eliminar el proyecto' });
         }
-    }
+    },
+
 };
 
 module.exports = proyectoController;

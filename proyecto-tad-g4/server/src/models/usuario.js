@@ -16,7 +16,7 @@ Usuario.init({
     foto_perfil: DataTypes.STRING
 }, {
     sequelize,
-    modelName: 'usuario',
+    modelName: 'Usuario',
     tableName: 'usuario',
     timestamps: false
 });

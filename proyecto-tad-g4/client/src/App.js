@@ -11,6 +11,7 @@ import MyProjectsPage from './pages/MyProjectsPage';
 import CreateProjectPage from './pages/CreateProjectPage';
 import EditProjectPage from './pages/EditProjectPage';
 import EditUserPage from './pages/EditUserPage';
+import DetailsProjectPage from './pages/DetailsProjectPage';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/myprojects" element={<PrivateRoute element={MyProjectsPage} />} />
           <Route path="/create-project" element={<PrivateRoute element={CreateProjectPage} />} />
           <Route path="/edit-project/:id" element={<PrivateRoute element={EditProjectPage} />} />
+          <Route path="/project-details/:id" element={<DetailsProjectPage />} />
         </Routes>
       </Router>
     </UserProvider>

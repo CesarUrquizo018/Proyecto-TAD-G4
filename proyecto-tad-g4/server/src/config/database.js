@@ -1,4 +1,3 @@
-// src/config/database.js
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('bd-tad-g4', 'root', 'admin1', {

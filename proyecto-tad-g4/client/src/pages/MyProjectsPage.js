@@ -13,8 +13,10 @@ function MyProjectsPage() {
   const navigate = useNavigate();  // Hook para la navegación
 
   useEffect(() => {
-    obtenerProyectos();
-  }, []);
+    if (user) {
+      obtenerProyectos();
+    }
+  }, [user]);
 
   const obtenerProyectos = async () => {
     try {
@@ -53,6 +55,10 @@ function MyProjectsPage() {
     navigate(`/edit-project/${id}`); // Navegar a la página de edición
   };
 
+  const verDetallesProyecto = (id) => {
+    navigate(`/project-details/${id}`); // Navegar a la página de detalles del proyecto
+  };
+
   return (
     <div>
       <nav>
@@ -68,12 +74,12 @@ function MyProjectsPage() {
       <Link to="/create-project" className="crear-proyecto-link">
         Crear Proyecto
         <img src={agregarProyectoImg} alt="(+)" className="crear-proyecto-link img" />
-        </Link>
+      </Link>
         
       <div>
         {proyectos.map(proyecto => (
           <div key={proyecto.id_proyecto} className="project-table">
-            <h2 className='titulo-proyecto'>{proyecto.titulo}</h2>
+            <h2 className='titulo-proyecto' onClick={() => verDetallesProyecto(proyecto.id_proyecto)}>{proyecto.titulo}</h2>
             <table>
               <thead>
                 <tr>
@@ -86,15 +92,15 @@ function MyProjectsPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr onClick={() => verDetallesProyecto(proyecto.id_proyecto)} style={{ cursor: 'pointer' }}>
                   <td>{proyecto.id_proyecto}</td>
                   <td>{proyecto.descripcion}</td>
                   <td>{formatDate(proyecto.fecha_creacion)}</td>
                   <td>{proyecto.ciclo}</td>
                   <td>{proyecto.curso}</td>
                   <td>
-                    <button onClick={() => editarProyecto(proyecto.id_proyecto)}>Editar</button>
-                    <button onClick={() => confirmarYBorrarProyecto(proyecto.id_proyecto)}>Borrar</button>
+                    <button onClick={(e) => { e.stopPropagation(); editarProyecto(proyecto.id_proyecto); }}>Editar</button>
+                    <button onClick={(e) => { e.stopPropagation(); confirmarYBorrarProyecto(proyecto.id_proyecto); }}>Borrar</button>
                   </td>
                 </tr>
               </tbody>

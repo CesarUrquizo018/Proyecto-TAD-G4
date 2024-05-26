@@ -25,7 +25,11 @@ function CreateProjectPage() {
             };
 
             const response = await axios.post('http://localhost:3000/api/proyectos', proyecto);
-            navigate('/myprojects'); // Redirige al usuario a sus proyectos después de crear uno
+            if (response.status === 201) {
+                navigate('/myprojects'); // Redirige al usuario a sus proyectos después de crear uno
+            } else {
+                console.error('Error al crear el proyecto');
+            }
         } catch (error) {
             console.error('Error al crear el proyecto:', error);
         }
@@ -67,7 +71,7 @@ function CreateProjectPage() {
                     required
                 />
                 <button type="submit">Crear Proyecto</button>
-                <button type="boton" onClick={handleCreateClick} className="btn-regresar">Regresar</button>
+                <button type="button" onClick={handleCreateClick} className="btn-regresar">Regresar</button>
             </form>
         </div>
     );

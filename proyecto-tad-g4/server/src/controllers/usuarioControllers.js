@@ -28,7 +28,8 @@ const usuarioController = {
 
     createUsuario: async (req, res) => {
         try {
-            const usuario = await Usuario.create(req.body);
+            const hashedPassword = await bcrypt.hash(req.body.contrasena, 10);
+            const usuario = await Usuario.create({ ...req.body, contrasena: hashedPassword });
             res.status(201).json(usuario);
         } catch (error) {
             console.error('Error al crear el usuario:', error);
@@ -66,7 +67,6 @@ const usuarioController = {
             res.status(500).send({ message: 'Error al eliminar el usuario' });
         }
     }
-
 };
 
 module.exports = usuarioController;

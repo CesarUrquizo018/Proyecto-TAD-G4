@@ -43,19 +43,19 @@ function CreateUserPage() {
             <form onSubmit={handleSubmit} className="crear_usuario-form">
                 <div className="form-group">
                     <label htmlFor="username">Nombre de usuario:</label>
-                    <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="codigo">Código:</label>
-                    <input type="text" id="codigo" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
+                    <input type="text" id="codigo" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="email">Email:</label>
-                    <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Contraseña:</label>
-                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <button type="submit" className="btn-crear_usuario">Crear Usuario</button>
                 <button type="button" onClick={handleCreateClick} className="btn-login">Regresar</button>
