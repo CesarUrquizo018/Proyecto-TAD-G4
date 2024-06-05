@@ -4,8 +4,14 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from '../utils/dateUtils';
 import { useUser } from '../context/UserContext';
-import '../assets/styles/my_projects.css'; // Asegúrate de que la ruta es correcta
 import agregarProyectoImg from '../images/agregarProyecto.png';
+
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Table from 'react-bootstrap/Table';
 
 function MyProjectsPage() {
   const { user } = useUser(); // Acceder al objeto usuario desde el contexto
@@ -16,6 +22,11 @@ function MyProjectsPage() {
     if (user) {
       obtenerProyectos();
     }
+    document.body.style.backgroundColor = '#343a40';  // Aplica el fondo oscuro
+
+    return () => {
+        document.body.style.backgroundColor = '';  // Restablece al estilo predeterminado al salir
+    };
   }, [user]);
 
   const obtenerProyectos = async () => {
@@ -51,64 +62,64 @@ function MyProjectsPage() {
     }
   };
 
-  const editarProyecto = (id) => {
-    navigate(`/edit-project/${id}`); // Navegar a la página de edición
-  };
-
   const verDetallesProyecto = (id) => {
     navigate(`/project-details/${id}`); // Navegar a la página de detalles del proyecto
   };
 
+ 
   return (
-    <div>
-      <nav>
-        <ul>
-          <li><Link to="/home">Home</Link></li>
-          <li><Link to="/user">User</Link></li>
-          <li><Link to="/myprojects">Mis Proyectos</Link></li>
-          <li><Link to="/">Salir</Link></li>
-        </ul>
-      </nav>
-      <h1>Mis Proyectos</h1>
-      
-      <Link to="/create-project" className="crear-proyecto-link">
-        Crear Proyecto
-        <img src={agregarProyectoImg} alt="(+)" className="crear-proyecto-link img" />
+    <Container className="mt-4 bg-dark text-white">
+      <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/home">Home</Nav.Link>
+          <Nav.Link as={Link} to="/user">User</Nav.Link>
+          <Nav.Link as={Link} to="/myprojects" className="bg-primary">Mis Proyectos</Nav.Link>
+          <Nav.Link as={Link} to="/myprojects" responsivediv>Mis mensajes</Nav.Link>
+          <Nav.Link as={Link} to="/">Salir</Nav.Link>
+        </Nav>
+      </Navbar>
+
+      <h1 className="mb-4">Mis Proyectos</h1>
+      <Link to="/create-project">
+        <Button variant="primary" className="mb-3">
+          Crear Proyecto <img src={agregarProyectoImg} alt="Agregar Proyecto" style={{ width: 30, marginLeft: 10 }}/>
+        </Button>
       </Link>
-        
-      <div>
-        {proyectos.map(proyecto => (
-          <div key={proyecto.id_proyecto} className="project-table">
-            <h2 className='titulo-proyecto' onClick={() => verDetallesProyecto(proyecto.id_proyecto)}>{proyecto.titulo}</h2>
-            <table>
-              <thead>
+      
+      {proyectos.map(proyecto => (
+        <Card key={proyecto.id_proyecto} className="mb-3 bg-dark text-white" style={{ border: 'none' }}>
+          <Card.Body>
+            <Card.Title align-items-center>{proyecto.titulo}</Card.Title>
+            <Table striped bordered hover variant="secondary" size="sm" d-flex flex-column>
+              <tbody onClick={() => verDetallesProyecto(proyecto.id_proyecto)} style={{ cursor: 'pointer' }}>
                 <tr>
-                  <th>ID</th>
-                  <th>Descripción</th>
-                  <th>Fecha de creación</th>
-                  <th>Ciclo</th>
-                  <th>Curso</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr onClick={() => verDetallesProyecto(proyecto.id_proyecto)} style={{ cursor: 'pointer' }}>
+                  <td>ID</td>
                   <td>{proyecto.id_proyecto}</td>
+                </tr>
+                <tr>
+                  <td>Descripción</td>
                   <td>{proyecto.descripcion}</td>
+                </tr>
+                <tr>
+                  <td>Fecha de creación</td>
                   <td>{formatDate(proyecto.fecha_creacion)}</td>
+                </tr>
+                <tr>
+                  <td>Ciclo</td>
                   <td>{proyecto.ciclo}</td>
+                </tr>
+                <tr>
+                  <td>Curso</td>
                   <td>{proyecto.curso}</td>
-                  <td>
-                    <button onClick={(e) => { e.stopPropagation(); editarProyecto(proyecto.id_proyecto); }}>Editar</button>
-                    <button onClick={(e) => { e.stopPropagation(); confirmarYBorrarProyecto(proyecto.id_proyecto); }}>Borrar</button>
-                  </td>
                 </tr>
               </tbody>
-            </table>
-          </div>
-        ))}
-      </div>
-    </div>
+            </Table>
+            <Button variant="info" onClick={() => navigate(`/edit-project/${proyecto.id_proyecto}`)}>Editar</Button>
+            <Button variant="danger" onClick={() => confirmarYBorrarProyecto(proyecto.id_proyecto)} className="ms-2">Borrar</Button>
+          </Card.Body>
+        </Card>
+      ))}
+    </Container>
   );
 }
 

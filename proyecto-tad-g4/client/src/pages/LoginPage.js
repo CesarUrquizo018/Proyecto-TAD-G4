@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../assets/styles/login.css';
-
 import { useUser } from '../context/UserContext';
+import userImage from '../images/imagenes-de-usuario.png';
+
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
+
+
 
 function LoginPage() {
     const [email, setEmail] = useState('');
@@ -11,6 +19,14 @@ function LoginPage() {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
     const { loginUser } = useUser();
+
+    useEffect(() => {
+        document.body.style.backgroundColor = '#343a40';  // Aplica el fondo oscuro
+
+        return () => {
+            document.body.style.backgroundColor = '';  // Restablece al estilo predeterminado al salir
+        };
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,22 +47,33 @@ function LoginPage() {
     };
 
     return (
-        <div className="login">
-            <h1>Iniciar sesión</h1>
-            <form onSubmit={handleSubmit} className="login-form">
-                <div className="form-group">
-                    <label htmlFor="email">Correo electrónico:</label>
-                    <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Contraseña:</label>
-                    <input type="password" id="password" value={contrasena} onChange={(e) => setContrasena(e.target.value)} />
-                </div>
-                <button type="submit" className="btn-login">Iniciar sesión</button>
-                <button type="button" onClick={handleCreateClick} className="btn-create">Crear cuenta</button>
-            </form>
-            {message && <p className="message">{message}</p>}
-        </div>
+        <div className="bg-dark text-white min-vh-100">  
+        <Container className="py-5 d-flex flex-column align-items-center bg-dark text-white">
+            <h1 className="mb-3 ">INICIAR SESIÓN</h1>
+            <Image src={userImage} roundedCircle style={{ width: "150px", height: "auto" }}/>
+            <Form onSubmit={handleSubmit} className="w-100" style={{ maxWidth: "320px" }}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Correo electrónico:</Form.Label>
+                    <Form.Control type="email" placeholder="Colocar correo" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Contraseña:</Form.Label>
+                    <Form.Control type="password" placeholder="Colocar contraseña" value={contrasena} onChange={(e) => setContrasena(e.target.value)} />
+                </Form.Group>
+
+                <Row className="mb-3 d-flex justify-content-center ">
+                    <Col xs="auto">
+                        <Button variant="primary" onClick={handleSubmit} className="me-2">LOGIN</Button>
+                    </Col>
+                    <Col xs="auto">
+                        <Button variant="primary" onClick={handleCreateClick}>CREAR CUENTA</Button> 
+                    </Col>
+                </Row>
+                </Form>
+                        {message && <p className="message">{message}</p>}
+        </Container>
+    </div>   
     );
 }
 

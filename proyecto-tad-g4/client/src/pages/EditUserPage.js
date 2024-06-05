@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import '../assets/styles/edit_user.css'; 
-
 function EditUserPage() {
     const navigate = useNavigate();
     const { loginUser } = useUser();

@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../assets/styles/register_user.css';  // Asegúrate de que la ruta es correcta
+import userImage from '../images/agregar-usuario.png';
+
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 
 function CreateUserPage() {
     const [username, setUsername] = useState('');
@@ -13,6 +20,14 @@ function CreateUserPage() {
 
     // Establecer el valor predeterminado para la foto de perfil
     const defaultProfilePhoto = `${username}.jpg`;
+
+    useEffect(() => {
+        document.body.style.backgroundColor = '#343a40';  // Aplica el fondo oscuro
+
+        return () => {
+            document.body.style.backgroundColor = '';  // Restablece al estilo predeterminado al salir
+        };
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,29 +53,42 @@ function CreateUserPage() {
     };
 
     return (
-        <div className="crear_usuario">
-            <h1>Crear usuario</h1>
-            <form onSubmit={handleSubmit} className="crear_usuario-form">
-                <div className="form-group">
-                    <label htmlFor="username">Nombre de usuario:</label>
-                    <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="codigo">Código:</label>
-                    <input type="text" id="codigo" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Contraseña:</label>
-                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                </div>
-                <button type="submit" className="btn-crear_usuario">Crear Usuario</button>
-                <button type="button" onClick={handleCreateClick} className="btn-login">Regresar</button>
-            </form>
-            {message && <p className="message">{message}</p>}
+        <div className="bg-dark text-white min-vh-100">
+            <Container className="py-5 d-flex flex-column align-items-center bg-dark text-white">
+                <h1 className="mb-3">Crear Usuario</h1>
+                <Image src={userImage} roundedCircle style={{ width: "150px", height: "auto" }}/>
+                <Form onSubmit={handleSubmit} className="w-100" style={{ maxWidth: "320px" }}>
+                    <Form.Group className="mb-3" controlId="formUsername">
+                        <Form.Label>Nombre de usuario:</Form.Label>
+                        <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formCodigo">
+                        <Form.Label>Código:</Form.Label>
+                        <Form.Control type="text" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Label>Email:</Form.Label>
+                        <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formPassword">
+                        <Form.Label>Contraseña:</Form.Label>
+                        <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </Form.Group>
+
+                    <Row className="mb-3 justify-content-center">
+                        <Col xs="auto">
+                            <Button variant="primary" onClick={handleSubmit} >Crear Usuario</Button>
+                        </Col>
+                        <Col xs="auto">
+                            <Button variant="primary" onClick={handleCreateClick}>Regresar</Button>
+                        </Col>
+                    </Row>
+                </Form>
+                {message && <p className="message">{message}</p>}
+            </Container>
         </div>
     );
 }

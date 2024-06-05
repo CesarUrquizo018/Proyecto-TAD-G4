@@ -2,8 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import { formatDate } from '../utils/dateUtils';
+import { useUser } from '../context/UserContext';
+
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
 
 function DetailsProjectPage() {
+    const { user } = useUser(); // Acceder al objeto usuario desde el contexto
     const { id } = useParams();
     const [proyecto, setProyecto] = useState(null);
     const [fuentes, setFuentes] = useState([]);
@@ -73,6 +80,11 @@ function DetailsProjectPage() {
         };
 
         fetchData();
+        document.body.style.backgroundColor = '#343a40';  // Aplica el fondo oscuro
+
+        return () => {
+            document.body.style.backgroundColor = '';  // Restablece al estilo predeterminado al salir
+        };
     }, [id]);
 
     if (loading) {
@@ -84,51 +96,53 @@ function DetailsProjectPage() {
     }
 
     return (
-        <div>
-            <nav>
-                <ul>
-                    <li><Link to="/home">Home</Link></li>
-                    <li><Link to="/user">User</Link></li>
-                    <li><Link to="/myprojects">Mis Proyectos</Link></li>
-                    <li><Link to="/">Salir</Link></li>
-                </ul>
-            </nav>
-            <h1>{proyecto.titulo}</h1>
-            <p>{proyecto.descripcion}</p>
-            <p>Creado por: {proyecto.usuario?.nombre} ({proyecto.usuario?.email})</p>
-            <p>Fecha de creación: {formatDate(proyecto.fecha_creacion)}</p>
-            <p>Ciclo: {proyecto.ciclo}</p>
-            <p>Curso: {proyecto.curso}</p>
-
-            <h2>Fuentes</h2>
-            <ul>
-                {fuentes.map(fuente => (
-                    <li key={fuente.id_fuentes}>
-                        <a href={fuente.URLFuente} target="_blank" rel="noopener noreferrer">{fuente.NombreFuente}</a> - {formatDate(fuente.FechaPublicacion)}
-                    </li>
-                ))}
-            </ul>
-
-            <h2>Anotaciones</h2>
-            <ul>
-                {anotaciones.map(anotacion => (
-                    <li key={anotacion.id_anotaciones}>
-                        {anotacion.ContenidoAnotacion} - {anotacion.usuario?.nombre}
-                    </li>
-                ))}
-            </ul>
-
-            <h2>Otros Recursos</h2>
-            <ul>
-                {otros.map(otro => (
-                    <li key={otro.id_otros}>
-                        {otro.NombreOtro}: {otro.DescripcionOtro}
-                    </li>
-                ))}
-            </ul>
-
-            <Link to="/myprojects">Volver a mis proyectos</Link>
-        </div>
+        <Container className="mt-4 bg-dark text-white">
+            <Card className="bg-dark text-white border-0">
+                <Card.Header as="h1">{proyecto.titulo}</Card.Header>
+                <Card.Body>
+                    <Card.Text>{proyecto.descripcion}</Card.Text>
+                    <ListGroup variant="flush" className="bg-dark text-white border-0">
+                        <ListGroup.Item className="bg-dark text-white border-0">Creado por: {user.nombre} ({user.email})</ListGroup.Item>
+                        <ListGroup.Item className="bg-dark text-white border-0">Fecha de creación: {formatDate(proyecto.fecha_creacion)}</ListGroup.Item>
+                        <ListGroup.Item className="bg-dark text-white border-0">Ciclo: {proyecto.ciclo}</ListGroup.Item>
+                        <ListGroup.Item className="bg-dark text-white border-0">Curso: {proyecto.curso}</ListGroup.Item>
+                    </ListGroup>
+                </Card.Body>
+            </Card>
+            <Card className="mt-3 bg-dark text-white border-0">
+                <Card.Header as="h2">Fuentes</Card.Header>
+                <ListGroup variant="flush" className="bg-dark text-white border-0">
+                    {fuentes.map(fuente => (
+                        <ListGroup.Item key={fuente.id_fuentes} className="bg-dark text-white border-0">
+                            {fuente.NombreFuente} - {fuente.URLFuente} - {formatDate(fuente.FechaPublicacion)}
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+            </Card>
+            <Card className="mt-3 bg-dark text-white border-0">
+                <Card.Header as="h2">Anotaciones</Card.Header>
+                <ListGroup variant="flush" className="bg-dark text-white border-0">
+                    {anotaciones.map(anotacion => (
+                        <ListGroup.Item key={anotacion.id_anotaciones} className="bg-dark text-white border-0">
+                            {anotacion.ContenidoAnotacion} - {user.nombre}
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+            </Card>
+            <Card className="mt-3 bg-dark text-white border-0">
+                <Card.Header as="h2">Otros Recursos</Card.Header>
+                <ListGroup variant="flush" className="bg-dark text-white border-0">
+                    {otros.map(otro => (
+                        <ListGroup.Item key={otro.id_otros} className="bg-dark text-white border-0">
+                            {otro.NombreOtro}: {otro.DescripcionOtro}
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+            </Card>
+            <div className="mt-3">
+                <Button variant="primary" as={Link} to="/myprojects" >Volver a mis proyectos</Button>
+            </div>
+        </Container>
     );
 }
 

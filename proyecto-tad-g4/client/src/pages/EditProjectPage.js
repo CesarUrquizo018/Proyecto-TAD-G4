@@ -1,7 +1,12 @@
-// src/pages/EditProjectPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 function EditProjectPage() {
   const [titulo, setTitulo] = useState('');
@@ -9,7 +14,7 @@ function EditProjectPage() {
   const [ciclo, setCiclo] = useState('');
   const [curso, setCurso] = useState('');
   const navigate = useNavigate();
-  const { id } = useParams(); // Obtener el ID del proyecto desde la URL
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchProyecto = async () => {
@@ -25,17 +30,17 @@ function EditProjectPage() {
       }
     };
     fetchProyecto();
+    document.body.style.backgroundColor = '#343a40';  // Aplica el fondo oscuro
+
+    return () => {
+        document.body.style.backgroundColor = '';  // Restablece al estilo predeterminado al salir
+    };
   }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const proyecto = {
-        titulo,
-        descripcion,
-        ciclo,
-        curso,
-      };
+      const proyecto = { titulo, descripcion, ciclo, curso };
       await axios.put(`http://localhost:3000/api/proyectos/${id}`, proyecto);
       navigate('/myprojects'); // Redirigir al usuario a la lista de sus proyectos después de actualizar
     } catch (error) {
@@ -44,51 +49,54 @@ function EditProjectPage() {
   };
 
   return (
-    <div>
-      <h1>Editar Proyecto</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="titulo">Título del Proyecto:</label>
-          <input
-            id="titulo"
-            type="text"
-            value={titulo}
-            onChange={e => setTitulo(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="descripcion">Descripción:</label>
-          <textarea
-            id="descripcion"
-            value={descripcion}
-            onChange={e => setDescripcion(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="ciclo">Ciclo:</label>
-          <input
-            id="ciclo"
-            type="number"
-            value={ciclo}
-            onChange={e => setCiclo(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="curso">Curso:</label>
-          <input
-            id="curso"
-            type="text"
-            value={curso}
-            onChange={e => setCurso(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Actualizar Proyecto</button>
-      </form>
-    </div>
+    <Container className="mt-4 bg-dark text-white d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+      <Form onSubmit={handleSubmit} className="w-100" style={{ maxWidth: "500px" }}>
+        <Row>
+          <Col md={12}>
+            <h1 className="text-center mb-4">Editar Proyecto</h1>
+            <Form.Group>
+              <Form.Label>Título del Proyecto:</Form.Label>
+              <Form.Control
+                type="text"
+                value={titulo}
+                onChange={e => setTitulo(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Descripción:</Form.Label>
+              <Form.Control
+                as="textarea"
+                value={descripcion}
+                onChange={e => setDescripcion(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Ciclo:</Form.Label>
+              <Form.Control
+                type="number"
+                value={ciclo}
+                onChange={e => setCiclo(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Curso:</Form.Label>
+              <Form.Control
+                type="text"
+                value={curso}
+                onChange={e => setCurso(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <div className="text-center mt-3">
+              <Button variant="primary" onClick={handleSubmit}>Actualizar Proyecto</Button>
+            </div>
+          </Col>
+        </Row>
+      </Form>
+    </Container>
   );
 }
 

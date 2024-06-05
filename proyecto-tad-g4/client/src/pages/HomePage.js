@@ -3,7 +3,13 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../utils/dateUtils';
 import { useUser } from '../context/UserContext';  // Asegúrate de que la ruta al contexto es correcta
-import '../assets/styles/home.css'; // Verifica que la ruta al CSS es correcta
+
+import Container from 'react-bootstrap/Container';
+import Table from 'react-bootstrap/Table';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 function HomePage() {
   const { user } = useUser(); // Se mantiene por si necesitas acceder al usuario para otras funciones
@@ -11,6 +17,11 @@ function HomePage() {
 
   useEffect(() => {
     obtenerProyectos();
+      document.body.style.backgroundColor = '#343a40';  // Aplica el fondo oscuro
+
+      return () => {
+          document.body.style.backgroundColor = '';  // Restablece al estilo predeterminado al salir
+      };
   }, []); // La dependencia vacía asegura que este efecto se ejecute solo una vez cuando el componente se monta
 
   const obtenerProyectos = async () => {
@@ -29,44 +40,50 @@ function HomePage() {
   };
 
   return (
-    <div>
-      <nav>
-        <ul>
-          <li><Link to="/home">Home</Link></li>
-          <li><Link to="/user">User</Link></li>
-          <li><Link to="/myprojects">Mis Proyectos</Link></li>
-          <li><Link to="/">Salir</Link></li>
-        </ul>
-      </nav>
-      <h1>Proyectos</h1>
-      <div>
-        {proyectos.map(proyecto => (
-          <div key={proyecto.id_proyecto} className="project-table">
-            <h2 className='titulo-proyecto'>{proyecto.titulo}</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Descripción</th>
-                  <th>Fecha de creación</th>
-                  <th>Ciclo</th>
-                  <th>Curso</th>
-                </tr>
-              </thead>
+    <Container className="mt-4 bg-dark text-white">
+        <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
+            <Nav className="me-auto">
+              <Nav.Link as={Link} to="/home" active className="bg-primary">Home</Nav.Link>
+              <Nav.Link as={Link} to="/user" responsivediv>User</Nav.Link>
+              <Nav.Link as={Link} to="/myprojects" responsivediv>Mis Proyectos</Nav.Link>
+              <Nav.Link as={Link} to="/myprojects" responsivediv>Mis mensajes</Nav.Link>
+              <Nav.Link as={Link} to="/" responsivediv>Salir</Nav.Link>
+            </Nav>
+        </Navbar>
+
+      <h1 className="mb-4 text-white">Proyectos</h1>
+      {proyectos.map(proyecto => (
+        <Card key={proyecto.id_proyecto} className="mb-3" >
+          <Card.Body >
+            <Card.Title>{proyecto.titulo}</Card.Title>
+            <Card.Text>
+              {proyecto.descripcion}
+            </Card.Text>
+            <Table striped bordered hover size="sm" responsivediv variant="secondary" >
               <tbody>
                 <tr>
+                  <td>ID</td>
                   <td>{proyecto.id_proyecto}</td>
-                  <td>{proyecto.descripcion}</td>
+                </tr>
+                <tr>
+                  <td>Fecha de creación</td>
                   <td>{formatDate(proyecto.fecha_creacion)}</td>
+                </tr>
+                <tr>
+                  <td>Ciclo</td>
                   <td>{proyecto.ciclo}</td>
+                </tr>
+                <tr>
+                  <td>Curso</td>
                   <td>{proyecto.curso}</td>
                 </tr>
               </tbody>
-            </table>
-          </div>
-        ))}
-      </div>
-    </div>
+            </Table>
+            <Button variant="primary">ENVIAR SOLICITUD</Button>
+          </Card.Body>
+        </Card>
+      ))}
+    </Container>
   );
 }
 

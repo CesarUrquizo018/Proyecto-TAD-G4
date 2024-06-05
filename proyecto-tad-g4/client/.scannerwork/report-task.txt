@@ -2,5 +2,5 @@ projectKey=Proyecto-TAD-G4
 serverUrl=http://localhost:9000
 serverVersion=10.5.1.90531
 dashboardUrl=http://localhost:9000/dashboard?id=Proyecto-TAD-G4
-ceTaskId=5edda82a-9e1d-487a-b83d-cf9f2cc1b7cd
-ceTaskUrl=http://localhost:9000/api/ce/task?id=5edda82a-9e1d-487a-b83d-cf9f2cc1b7cd
+ceTaskId=eea8ac98-d55f-4ea1-80b4-b5c993a2b7b4
+ceTaskUrl=http://localhost:9000/api/ce/task?id=eea8ac98-d55f-4ea1-80b4-b5c993a2b7b4
